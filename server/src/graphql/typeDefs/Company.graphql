@@ -1,7 +1,7 @@
 """
 A Company on our platform.
 
-// todo: 3. need a resolver to make the employees field work, right now it's just returning null. this query below should work.
+// todo: 3(done!). need a resolver to make the employees field work, right now it's just returning null. this query below should work.
 
 query Companies {
   companies {
@@ -20,11 +20,18 @@ query Companies {
     }
   }
 }
+
+// not implemented fields
+// ----------------------
+// suffice: faker.company.companySuffix(),
+// catchPhrase: faker.company.catchPhrase(),
+// bs: faker.company.bs(),
 """
 type Company {
   id: ID!
   color: Color
   image: String!
   name: String!
+  address: Address
   employees: [User!]
 }

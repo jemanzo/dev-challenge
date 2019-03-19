@@ -1,16 +1,30 @@
-import fs from 'fs';
-import util from 'util';
-
-const readDir = util.promisify(fs.readdir);
-
-import { getCompany } from '../../../helpers';
+import { getCompanies } from '../../../helpers';
 
 export default async function companies(root, args, { ctx }, info) {
-  const files = await readDir('./data/companies');
+  const { name, limit, after } = args;
+  const keywords =
+    name &&
+    name
+      .replace(/,+|\s+/g, ' ') // things to be ignored (whitespace, comma)
+      .replace('  ', ' ') // remove double spaces
+      .trim()
+      .toLowerCase()
+      .split(' ');
 
-  const companies = files
-    .filter(filename => filename.includes('.json'))
-    .map(filename => getCompany(filename.replace('.json', '')));
-
-  return companies;
+  return getCompanies(
+    company => {
+      if (keywords) {
+        // filtering by keywords
+        // "company.name" must contain all keywords
+        const compName = company.name.toLowerCase();
+        for (let i = 0; i < keywords.length; i++) {
+          if (compName.indexOf(keywords[i]) < 0) {
+            return false;
+          }
+        }
+      }
+      return true;
+    },
+    { limit, after }
+  );
 }

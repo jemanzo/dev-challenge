@@ -1,8 +1,5 @@
-import fs from 'fs';
-import util from 'util';
-const readFile = util.promisify(fs.readFile);
+import { companies } from '../model';
 
-export default async function getCompany(id) {
-  const data = await readFile(`./data/companies/${id}.json`, 'utf8');
-  return JSON.parse(data);
+export default async function getCompany(keyOrID) {
+  return companies.get(keyOrID);
 }
