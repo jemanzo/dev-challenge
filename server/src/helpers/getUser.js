@@ -1,5 +1,5 @@
 import { users } from '../model';
 
-export default async function getUser(keyOrID) {
+export default function getUser(keyOrID) {
   return users.get(keyOrID);
 }
