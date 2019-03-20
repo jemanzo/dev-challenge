@@ -6,10 +6,10 @@ import {
   FlatList,
   StyleSheet
 } from 'react-native';
-import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 
 import { ErrorScene, UserList } from '../../components';
+import { QRY_USERS } from '../../queries';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,44 +17,34 @@ const styles = StyleSheet.create({
   }
 });
 
-const query = gql`
-  query Users {
-    users {
-      id
-      color
-      name
-      email
-      image
-    }
-  }
-`;
-
 export default class UsersScene extends PureComponent {
+  constructor() {
+    super();
+    // MISSING PAGINATION USING CURSOR!!!
+  }
   render() {
     const { navigation } = this.props;
-
     return (
       <View style={styles.container}>
-        <Query query={query}>
-          {({ loading, error, data }) => {
+        <Query query={QRY_USERS}>
+          {({ loading, error, data, fetchMore }) => {
             if (loading) {
               return <ActivityIndicator />;
             }
-
             if (error) {
               return <ErrorScene message={error.message} />;
             }
-
             return (
               <FlatList
                 data={data.users}
+                keyExtractor={item => item.id}
                 renderItem={({ item }) => (
                   <TouchableOpacity
                     onPress={() =>
                       navigation.navigate('UserScene', { id: item.id })
                     }
                   >
-                    <UserList user={item} />
+                    <UserList key={item.id} user={item} />
                   </TouchableOpacity>
                 )}
               />
