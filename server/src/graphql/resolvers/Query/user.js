@@ -1,6 +1,11 @@
+import { UserInputError } from 'apollo-server-koa';
 import { getUser } from '../../../helpers';
 
-export default async function user(root, { id }, { ctx }, info) {
+export default function user(root, { id }, { ctx }, info) {
   console.log(`query user: ${id}`);
-  return getUser(id);
+  const user = getUser(id);
+  if (!user) {
+    throw new UserInputError(`user not found`, { id });
+  }
+  return user;
 }
