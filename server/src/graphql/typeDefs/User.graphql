@@ -15,3 +15,15 @@ type User {
   company: Company
   friends: [User!]
 }
+
+type UserEdge {
+  cursor: String!
+  node: User!
+}
+
+type UsersResult {
+  count: Int!
+  totalCount: Int!
+  pageInfo: PageInfo!
+  edges: [UserEdge]!
+}

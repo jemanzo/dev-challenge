@@ -35,3 +35,15 @@ type Company {
   address: Address
   employees: [User!]
 }
+
+type CompanyEdge {
+  cursor: String!
+  node: Company!
+}
+
+type CompaniesResult {
+  count: Int!
+  totalCount: Int!
+  pageInfo: PageInfo!
+  edges: [CompanyEdge]!
+}

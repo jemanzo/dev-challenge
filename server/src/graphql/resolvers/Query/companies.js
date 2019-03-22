@@ -1,7 +1,13 @@
 import { getCompanies } from '../../../helpers';
 
 export default async function companies(root, args, { ctx }, info) {
-  const { name, limit, after } = args;
+
+  const { name, first, after } = args;
+
+  if (first < 0) {
+    throw new UserInputError('First must be positive');
+  }
+
   const keywords =
     name &&
     name
@@ -25,6 +31,6 @@ export default async function companies(root, args, { ctx }, info) {
       }
       return true;
     },
-    { limit, after }
+    { first, after }
   );
 }

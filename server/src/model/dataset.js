@@ -39,41 +39,19 @@ class FileDataset extends EventEmitter {
     const item = key && this.cache.get(key);
     return item && { ...item, id: key };
   }
-  getAll(filter, paging) {
-    let limit = paging && Number(paging.limit);
-    if (Number.isInteger(limit)) {
-      if (limit <= 0 || limit > 50) {
-        limit = 50;
-      }
-    } else {
-      limit = 50;
-    }
-    const results = [];
-    const sorted = this.sorted;
-    const after = this.ensureKey(paging && paging.after);
-    let found = typeof after !== 'string' || after.length < 0 ? true : false;
-    for (let i = 0; i < sorted.length; i++) {
-      const item = sorted[i]; // item = [key, value]
-      if (results.length >= limit) {
-        break;
-      }
-      if (found) {
-        if (!filter || filter(item[1])) {
-          results.push({ ...item[1], id: item[0] });
-        }
-      } else {
-        if (item[0] === after) {
-          found = true;
-        }
-      }
-    }
-    return results;
+  filter(filter) {
+    return this.sorted.filter(item => {
+      // each sorted item is equal to [key, value]
+      if (!filter || filter(item[1])) {
+        return true
+      } else { return false }
+    })
   }
   update(item) {
     item.id = this.ensureID(item.id);
     const key = this.ensureKey(item.id);
     if (!key || key.length !== 22) {
-      throw new Error(`unable to update. Invalid ID!`);
+      throw new Error('unable to update. Invalid ID!');
     }
     const oldItem = this.cache.get(key);
     if (!oldItem) {
@@ -154,7 +132,7 @@ function loadFile(file) {
       dts.sort();
     })
     .catch(error => {
-      dts.emit('error', error);
+      dts.emit('error', error, file);
     });
 }
 

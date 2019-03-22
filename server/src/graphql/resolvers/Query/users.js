@@ -17,7 +17,7 @@ export default async function users(root, args, { ctx }, info) {
   //
   // P.S.: For security reasons, in a production environment, all GraphQL queries
   //       received by this server should be pre-hashed and pre-approved.
-  //       A Reverse GraphQL Proxy should be used to filter unexpected queries!
+  //       A GraphQL Reverse Proxy should be used to filter unexpected queries!
   // ********
 
   // todo: 5(done!). getting this list of all users is slow.  Would be really cool if it could return all the users
@@ -29,7 +29,12 @@ export default async function users(root, args, { ctx }, info) {
   //     is irrelevant compared to the performance gain. (see "src/model/dataset.js")
   // ********
 
-  const { name, limit, after } = args;
+  const { name, first, after } = args;
+
+  if (first < 0) {
+    throw new UserInputError('First must be positive');
+  }
+
   const keywords =
     name &&
     name
@@ -53,6 +58,6 @@ export default async function users(root, args, { ctx }, info) {
       }
       return true;
     },
-    { limit, after }
+    { first, after }
   );
 }
