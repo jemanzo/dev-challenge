@@ -4,10 +4,10 @@ import {
   createStackNavigator
 } from 'react-navigation';
 
-import UsersScene from './UsersScene';
-import CompaniesScene from './CompaniesScene';
 import UserScene from './UserScene';
+import UsersScene from './UsersScene';
 import CompanyScene from './CompanyScene';
+import CompaniesScene from './CompaniesScene';
 
 const HomeScene = createBottomTabNavigator(
   {

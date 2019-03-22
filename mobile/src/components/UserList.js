@@ -12,13 +12,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderWidth: 3,
     borderColor: 'rgba(0,0,0,0.2)',
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
     overflow: 'hidden'
   },
   image: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
     resizeMode: 'contain'
   },
   text: {

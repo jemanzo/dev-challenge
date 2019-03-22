@@ -15,13 +15,35 @@ export const QRY_COMPANY_FULL = gql`
 `;
 
 export const QRY_USERS = gql`
-  query Users($after: String) {
-    users(limit: 50, after: $after) { ${USER_BASIC2} }
+  query Users($first: Int, $after: String, $name: String) {
+    users(first: $first, after: $after, name: $name) {
+      count
+      totalCount
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      edges {
+        cursor
+        node { ${USER_BASIC2} }
+      }
+    }
   }
 `;
 
 export const QRY_COMPANIES = gql`
-  query Companies($after: String) {
-    companies(limit: 50, after: $after) { ${COMPANY_BASIC2} }
+  query Companies($first: Int, $after: String, $name: String) {
+    companies(first: $first, after: $after, name: $name) {
+      count
+      totalCount
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      edges {
+        cursor
+        node { ${COMPANY_BASIC2} }
+      }
+    }
   }
 `;

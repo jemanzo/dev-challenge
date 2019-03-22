@@ -7,10 +7,10 @@ const address = "http://localhost:5000/graphql";
 
 const cache = new InMemoryCache();
 
-persistCache({
-  cache,
-  storage: AsyncStorage
-});
+// persistCache({
+//   cache,
+//   storage: AsyncStorage
+// });
 
 export default new ApolloClient({
   uri: address,

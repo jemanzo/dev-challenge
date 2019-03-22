@@ -26,7 +26,7 @@ export default class UsersScene extends PureComponent {
     const { navigation } = this.props;
     return (
       <View style={styles.container}>
-        <Query query={QRY_USERS}>
+        <Query query={QRY_USERS} variables={{ first: 100 }}>
           {({ loading, error, data, fetchMore }) => {
             if (loading) {
               return <ActivityIndicator />;
@@ -34,17 +34,37 @@ export default class UsersScene extends PureComponent {
             if (error) {
               return <ErrorScene message={error.message} />;
             }
+            const { count, totalCount, pageInfo, edges } = data.users
             return (
               <FlatList
-                data={data.users}
-                keyExtractor={item => item.id}
+                data={edges}
+                keyExtractor={item => item.cursor}
+                onEndReachedThreshold={0.5}
+                onEndReached={() =>
+                  fetchMore({
+                    variables: { first: 400, after: pageInfo.endCursor },
+                    updateQuery: (previousResult, { fetchMoreResult }) => {
+                      const newEdges = fetchMoreResult.users.edges;
+                      const pageInfo = fetchMoreResult.users.pageInfo;
+                      return newEdges.length
+                        ? { users: {
+                              __typename: previousResult.users.__typename,
+                              count,
+                              totalCount,
+                              pageInfo,
+                              edges: [...previousResult.users.edges, ...newEdges]
+                          } }
+                        : previousResult;
+                    }
+                  })
+                }
                 renderItem={({ item }) => (
                   <TouchableOpacity
                     onPress={() =>
-                      navigation.navigate('UserScene', { id: item.id })
+                      navigation.navigate('UserScene', { id: item.node.id, cursor: item.cursor })
                     }
                   >
-                    <UserList key={item.id} user={item} />
+                    <UserList key={item.cursor} user={item.node} />
                   </TouchableOpacity>
                 )}
               />
