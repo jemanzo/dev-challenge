@@ -2,9 +2,15 @@ import React, { memo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  userList: {
-    flexDirection: 'row',
-    padding: 20
+  main: {
+    flexDirection: 'column',
+    padding: 10
+  },
+  mainBody: {
+    flexDirection: 'column',
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: '#EEEEEE'
   },
   imageWrapper: {
     marginRight: 20,
@@ -21,38 +27,60 @@ const styles = StyleSheet.create({
     height: 80,
     resizeMode: 'contain'
   },
-  text: {
-    flexDirection: 'column'
+  separator: {
+    marginVertical: 8
   },
-  textName: {
-    fontSize: 24
+  field: {
+    flexDirection: 'row'
   },
-  textEmail: {
-    fontSize: 18
+  fieldName: {
+    flex: 1,
+    fontSize: 12,
+    color: 'gray'
+  },
+  fieldValue: {
+    flex: 2,
+    fontSize: 14
   }
 });
 
 export default memo(({ address }) => (
-  <View style={styles.addressList}>
+  <View style={styles.main}>
     <Text style={styles.textName}>Address</Text>
-    <View style={styles.text}>
-      <Text style={styles.textName}>{address.zipCode}</Text>
-      <Text style={styles.textEmail}>{address.city}</Text>
-      <Text style={styles.textEmail}>{address.cityPrefix}</Text>
-      <Text style={styles.textEmail}>{address.citySuffix}</Text>
-      <Text style={styles.textEmail}>{address.streetName}</Text>
-      <Text style={styles.textEmail}>{address.streetAddress}</Text>
-      <Text style={styles.textEmail}>{address.streetSuffix}</Text>
-      <Text style={styles.textEmail}>{address.streetPrefix}</Text>
-      <Text style={styles.textEmail}>{address.secondaryAddress}</Text>
-      <Text style={styles.textEmail}>{address.county}</Text>
-      <Text style={styles.textEmail}>{address.country}</Text>
-      <Text style={styles.textEmail}>{address.state}</Text>
-      <Text style={styles.textEmail}>{address.latitude}</Text>
-      <Text style={styles.textEmail}>{address.longitude}</Text>
+    <View style={styles.mainBody}>
+      <View style={styles.separator}>
+        {fieldRow('zipcode', address.zipCode)}
+      </View>
+      <View style={styles.separator}>
+        {fieldRow('city', address.city)}
+        {fieldRow('  prefix', address.cityPrefix)}
+        {fieldRow('  suffix', address.citySuffix)}
+      </View>
+      <View style={styles.separator}>
+        {fieldRow('street', address.streetName)}
+        {fieldRow('  address', address.streetAddress)}
+        {fieldRow('  prefix', address.streetPrefix)}
+        {fieldRow('  suffix', address.streetSuffix)}
+        {fieldRow('  sec.', address.secondaryAddress)}
+      </View>
+      <View style={styles.separator}>
+        {fieldRow('country', address.country)}
+        {fieldRow('  state', address.state)}
+        {fieldRow('  county', address.county)}
+      </View>
+      {fieldRow('geolocation', `${address.latitude}    ${address.longitude}`)}
     </View>
   </View>
 ));
+
+function fieldRow(fieldName, fieldValue){
+  return (
+    <View style={styles.field}>
+      <Text style={styles.fieldName}>{fieldName}</Text>
+      <Text style={styles.fieldValue}>{fieldValue}</Text>
+    </View>
+  )
+}
 
 // address:
 //    { zipCode: '71904',
