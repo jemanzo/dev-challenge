@@ -28,6 +28,10 @@ export default createStackNavigator(
   },
   {
     initialRouteName: 'HomeScene',
-    defaultNavigationOptions: {}
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#CCCCCC'
+      }
+    }
   }
 );

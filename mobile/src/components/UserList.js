@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 const styles = StyleSheet.create({
   userList: {
     flexDirection: 'row',
-    padding: 20
+    padding: 10
   },
   imageWrapper: {
     marginRight: 20,
@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
     fontSize: 24
   },
   textEmail: {
-    fontSize: 18
+    fontSize: 16,
+    color: 'gray'
   }
 });
 
@@ -39,7 +40,7 @@ export default memo(({ user }) => (
     </View>
     <View style={styles.text}>
       <Text style={styles.textName}>{user.name}</Text>
-      <Text style={styles.textEmail}>{user.email}</Text>
+      <Text style={styles.textEmail}>{user.email.toLowerCase()}</Text>
     </View>
   </View>
 ));

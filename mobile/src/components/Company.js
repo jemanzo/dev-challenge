@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import Address from './Address';
 
 const styles = StyleSheet.create({
-  userList: {
-    flexDirection: 'row',
+  main: {
+    flexDirection: 'column',
     padding: 20
   },
   imageWrapper: {
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 });
 
 export default memo(({ company }) => (
-  <View>
+  <View style={styles.main}>
     <View style={[styles.imageWrapper, { borderColor: company.color }]}>
       <Image style={styles.image} source={{ uri: company.image }} />
     </View>
