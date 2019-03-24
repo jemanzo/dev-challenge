@@ -2,10 +2,6 @@ import React, { memo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  main: {
-    flexDirection: 'column',
-    padding: 10
-  },
   mainBody: {
     flexDirection: 'column',
     padding: 10,
@@ -45,31 +41,28 @@ const styles = StyleSheet.create({
 });
 
 export default memo(({ address }) => (
-  <View style={styles.main}>
-    <Text style={styles.textName}>Address</Text>
-    <View style={styles.mainBody}>
-      <View style={styles.separator}>
-        {fieldRow('zipcode', address.zipCode)}
-      </View>
-      <View style={styles.separator}>
-        {fieldRow('city', address.city)}
-        {fieldRow('  prefix', address.cityPrefix)}
-        {fieldRow('  suffix', address.citySuffix)}
-      </View>
-      <View style={styles.separator}>
-        {fieldRow('street', address.streetName)}
-        {fieldRow('  address', address.streetAddress)}
-        {fieldRow('  prefix', address.streetPrefix)}
-        {fieldRow('  suffix', address.streetSuffix)}
-        {fieldRow('  sec.', address.secondaryAddress)}
-      </View>
-      <View style={styles.separator}>
-        {fieldRow('country', address.country)}
-        {fieldRow('  state', address.state)}
-        {fieldRow('  county', address.county)}
-      </View>
-      {fieldRow('geolocation', `${address.latitude}    ${address.longitude}`)}
+  <View style={styles.mainBody}>
+    <View style={styles.separator}>
+      {fieldRow('zipcode', address.zipCode)}
     </View>
+    <View style={styles.separator}>
+      {fieldRow('city', address.city)}
+      {fieldRow('   prefix', address.cityPrefix)}
+      {fieldRow('   suffix', address.citySuffix)}
+    </View>
+    <View style={styles.separator}>
+      {fieldRow('street', address.streetName)}
+      {fieldRow('   address', address.streetAddress)}
+      {fieldRow('   prefix', address.streetPrefix)}
+      {fieldRow('   suffix', address.streetSuffix)}
+      {fieldRow('   sec.', address.secondaryAddress)}
+    </View>
+    <View style={styles.separator}>
+      {fieldRow('country', address.country)}
+      {fieldRow('   state', address.state)}
+      {fieldRow('   county', address.county)}
+    </View>
+    {fieldRow('geolocation', `${address.latitude}    ${address.longitude}`)}
   </View>
 ));
 

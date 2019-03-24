@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     padding: 20
   },
+  mainHeader: {
+    flexDirection: 'row',
+    padding: 10
+  },
   imageWrapper: {
     marginRight: 20,
     borderRadius: 40,
@@ -22,30 +26,50 @@ const styles = StyleSheet.create({
     height: 80,
     resizeMode: 'contain'
   },
-  text: {
-    flexDirection: 'row'
+  headerInfo: {
+    fontSize: 22
   },
-  textName: {
-    fontSize: 24
+  headerInfoSmall: {
+    fontSize: 12,
+    color: 'gray'
   },
-  textEmail: {
-    fontSize: 18
+  separator: {
+    marginVertical: 8
+  },
+  field: {
+    flexDirection: 'column',
+    margin: 10
+  },
+  fieldName: {
+    fontSize: 16,
+    color: 'gray',
+    marginVertical: 10
+  },
+  fieldValue: {
+    fontSize: 14,
+    marginRight: 10
   }
 });
 
 export default memo(({ user }) => (
   <View style={styles.main}>
-    <View style={styles.main}>
+    <View style={styles.mainHeader}>
       <View style={[styles.imageWrapper, { borderColor: user.color }]}>
         <Image style={styles.image} source={{ uri: user.image }} />
       </View>
-      <Text style={styles.textName}>{user.name}</Text>
-      <Text> key {user.id}</Text>
+      <View>
+        <Text style={styles.headerInfo}>{user.name}</Text>
+        <Text style={styles.headerInfoSmall}>{user.id}</Text>
+        <Text style={styles.headerInfoSmall}>{user.email.toLowerCase()}</Text>
+      </View>
     </View>
-    <View>
-      <Text style={styles.textEmail}>{user.email}</Text>
-      <Text style={styles.textEmail}>{user.company && user.company.name}</Text>
+    <View style={styles.field}>
+      <Text style={styles.fieldName}>Company</Text>
+      <Text style={styles.fieldValue}>{user.company ? user.company.name : 'none yet!' }</Text>
     </View>
-    <Address address={user.address} />
+    <View style={styles.field}>
+      <Text style={styles.fieldName}>Address</Text>
+      <Address address={user.address} />
+    </View>
   </View>
 ));

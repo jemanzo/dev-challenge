@@ -20,5 +20,6 @@ export default new ApolloServer({
       };
     }
   },
+  tracing: false,
   debug: false // another way is setting NODE_ENV environment variable to ‘production’ or ‘test’
 });

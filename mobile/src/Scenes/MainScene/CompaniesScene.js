@@ -55,7 +55,7 @@ export default class CompaniesScene extends PureComponent {
         />
         <Query
           query={QRY_COMPANIES}
-          variables={{ first: 100, name: this.state.search }}
+          variables={{ first: 40, name: this.state.search }}
         >
           {({ loading, error, data, fetchMore }) => {
             if (loading) {
@@ -69,10 +69,10 @@ export default class CompaniesScene extends PureComponent {
               <FlatList
                 data={edges}
                 keyExtractor={item => item.cursor}
-                onEndReachedThreshold={50}
+                onEndReachedThreshold={0.5}
                 onEndReached={() =>
                   fetchMore({
-                    variables: { first: 400, after: pageInfo.endCursor },
+                    variables: { first: 80, after: pageInfo.endCursor },
                     updateQuery: (previousResult, { fetchMoreResult }) => {
                       const newEdges = fetchMoreResult.companies.edges;
                       const pageInfo = fetchMoreResult.companies.pageInfo;
